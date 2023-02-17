@@ -7,6 +7,11 @@
   "engines": {
     "vscode": "^1.75.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nikifutaki/vscode-toggle-list-task"
+  },
+  "license": "MIT",
   "categories": [
     "Other"
   ],
