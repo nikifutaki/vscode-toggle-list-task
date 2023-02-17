@@ -1,15 +1,39 @@
-import * as assert from "assert";
+import { strictEqual } from "assert";
+import { window } from "vscode";
 
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
-import * as vscode from "vscode";
-// import * as myExtension from '../../extension';
+import { checkList, checkTask } from "../../checkRegex";
 
 suite("Extension Test Suite", () => {
-	vscode.window.showInformationMessage("Start all tests.");
+	window.showInformationMessage("Start all tests.");
 
-	test("Sample test", () => {
-		assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-		assert.strictEqual(-1, [1, 2, 3].indexOf(0));
+	const testRegex = /test/;
+	const successRegex = testRegex.exec("test");
+	const failureRegex = testRegex.exec("Hello");
+	const list = "- Item";
+	const uncheckedTask = "- [ ] Unchecked";
+	const checkedTask = "- [x] Checked";
+	const jhonDoe = "-abc123";
+
+	test("Regex Test1: List", () => {
+		strictEqual(typeof successRegex, typeof checkList(list));
+	});
+
+	test("Regex Test2: Not List", () => {
+		const failTexts = [uncheckedTask, checkedTask, jhonDoe];
+		failTexts.forEach((v) => {
+			strictEqual(typeof failureRegex, typeof checkList(v));
+		});
+	});
+
+	test("Regex Test3: Task", () => {
+		strictEqual(typeof successRegex, typeof checkTask(uncheckedTask));
+		strictEqual(typeof successRegex, typeof checkTask(checkedTask));
+	});
+
+	test("Regex Test4: Not Task", () => {
+		const failTexts = [list, jhonDoe];
+		failTexts.forEach((v) => {
+			strictEqual(typeof failureRegex, typeof checkTask(v));
+		});
 	});
 });

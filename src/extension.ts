@@ -1,4 +1,5 @@
 import { commands, ExtensionContext, Range, window } from "vscode";
+import { checkList, checkTask } from "./checkRegex";
 
 export function activate(context: ExtensionContext) {
 	context.subscriptions.push(
@@ -8,10 +9,8 @@ export function activate(context: ExtensionContext) {
 
 function toggle(): Thenable<unknown> | void {
 	const editor = window.activeTextEditor!;
-	const listRegex = /^(\s*)([-+*]|[0-9]+[.)])(?! +\[[x ]\]) +/;
-	const tasklistRegex = /^(\s*)([-+*]|[0-9]+[.)]) +\[[x ]\] */;
 	let replaceRanges: Range[] = [];
-	let newState: boolean | undefined = undefined;
+	let newState: boolean | undefined = undefined; // true: to Task,false: to List,undefined: continue
 
 	for (const selection of editor.selections) {
 		for (let i = selection.start.line; i <= selection.end.line; i++) {
@@ -27,9 +26,9 @@ function toggle(): Thenable<unknown> | void {
 			}
 
 			let matches: RegExpExecArray | null;
-			if ((matches = listRegex.exec(line.text))) {
+			if ((matches = checkList(line.text))) {
 				if (newState === undefined) newState = true;
-			} else if ((matches = tasklistRegex.exec(line.text))) {
+			} else if ((matches = checkTask(line.text))) {
 				if (newState === undefined) newState = false;
 			}
 
