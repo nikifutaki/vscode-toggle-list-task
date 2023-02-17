@@ -2,7 +2,7 @@
   "name": "toggle-list-task",
   "displayName": "Toggle List and Task in Markdown",
   "description": "",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "publisher": "nikifutaki",
   "engines": {
     "vscode": "^1.75.0"
