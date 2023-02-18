@@ -1,7 +1,7 @@
 import { strictEqual } from "assert";
 import { window } from "vscode";
 
-import { checkList, checkTask } from "../../checkRegex";
+import { searchList, searchTask } from "../../searchRegex";
 
 suite("Extension Test Suite", () => {
 	window.showInformationMessage("Start all tests.");
@@ -15,25 +15,25 @@ suite("Extension Test Suite", () => {
 	const jhonDoe = "-abc123";
 
 	test("Regex Test1: List", () => {
-		strictEqual(typeof successRegex, typeof checkList(list));
+		strictEqual(typeof successRegex, typeof searchList(list));
 	});
 
 	test("Regex Test2: Not List", () => {
 		const failTexts = [uncheckedTask, checkedTask, jhonDoe];
 		failTexts.forEach((v) => {
-			strictEqual(typeof failureRegex, typeof checkList(v));
+			strictEqual(typeof failureRegex, typeof searchList(v));
 		});
 	});
 
 	test("Regex Test3: Task", () => {
-		strictEqual(typeof successRegex, typeof checkTask(uncheckedTask));
-		strictEqual(typeof successRegex, typeof checkTask(checkedTask));
+		strictEqual(typeof successRegex, typeof searchTask(uncheckedTask));
+		strictEqual(typeof successRegex, typeof searchTask(checkedTask));
 	});
 
 	test("Regex Test4: Not Task", () => {
 		const failTexts = [list, jhonDoe];
 		failTexts.forEach((v) => {
-			strictEqual(typeof failureRegex, typeof checkTask(v));
+			strictEqual(typeof failureRegex, typeof searchTask(v));
 		});
 	});
 });

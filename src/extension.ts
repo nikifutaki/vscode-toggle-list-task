@@ -1,5 +1,5 @@
 import { commands, ExtensionContext, Range, window } from "vscode";
-import { checkList, checkTask } from "./checkRegex";
+import { searchList, searchTask } from "./searchRegex";
 
 export function activate(context: ExtensionContext) {
 	context.subscriptions.push(
@@ -26,9 +26,9 @@ function toggle(): Thenable<unknown> | void {
 			}
 
 			let matches: RegExpExecArray | null;
-			if ((matches = checkList(line.text))) {
+			if ((matches = searchList(line.text))) {
 				if (newState === undefined) newState = true;
-			} else if ((matches = checkTask(line.text))) {
+			} else if ((matches = searchTask(line.text))) {
 				if (newState === undefined) newState = false;
 			}
 
